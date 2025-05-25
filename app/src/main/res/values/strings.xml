@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MemoryCardFlip</string>
+    <string name="title_text">Memory Card Flip</string>
+    <string name="easy_mode">Easy Mode</string>
+    <string name="hard_mode">Hard Mode</string>
+    <string name="sound_on">Sound: ON</string>
+    <string name="sound_off">Sound: OFF</string>
+    <string name="instruction_text">Flip cards to find matching pairs!</string>
+    <string name="play_again">Play Again</string>
+    <string name="congratulations">Congratulations!</string>
+</resources>
+
