@@ -57,7 +57,7 @@ public class MenuActivity extends AppCompatActivity {
         editor.apply();
 
         // Update button text
-        btnSoundToggle.setText(isSoundEnabled ? R.string.sound_on : R.string.sound_off);
+        btnSoundToggle.setText(getString(isSoundEnabled ? R.string.sound_on : R.string.sound_off));
     }
 
     private void startGame(String mode) {

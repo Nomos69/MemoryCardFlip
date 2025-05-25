@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
             // Initialize and setup the game
             setupGame();
         } catch (Exception e) {
-            // Handle any exceptions during initialization
-            Toast.makeText(this, "Error initializing game", Toast.LENGTH_SHORT).show();
+            // Log the exception to identify the issue
             e.printStackTrace();
+            Toast.makeText(this, "An error occurred: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
