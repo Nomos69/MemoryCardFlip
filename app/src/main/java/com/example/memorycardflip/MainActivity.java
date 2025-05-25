@@ -46,13 +46,18 @@ public class MainActivity extends AppCompatActivity {
     private boolean isProcessing = false; // Flag to prevent clicking during card processing
     private int pairsFound = 0;
 
-    // List of card image resources - Fixed: Added more images to prevent cycling issues
-    private final Integer[] cardImages = {
-            R.drawable.apple, R.drawable.banana, R.drawable.grapes,
-            R.drawable.hippo, R.drawable.lion, R.drawable.monkey,
-            // Add fallback images if you don't have enough unique images
-            R.drawable.back_card, R.drawable.back_card, R.drawable.back_card, R.drawable.back_card
+    // List of card image resources
+    private final Integer[] cardImagesEasy = {
+        R.drawable.apple, R.drawable.banana, R.drawable.grapes,
+        R.drawable.hippo, R.drawable.lion, R.drawable.monkey
     };
+    private final Integer[] cardImagesHard = {
+        R.drawable.apple, R.drawable.banana, R.drawable.grapes,
+        R.drawable.hippo, R.drawable.lion, R.drawable.monkey,
+        R.drawable.orange, R.drawable.img_1, R.drawable.hello,
+        R.drawable.fish, R.drawable.watermelon
+    };
+    private Integer[] cardImages = cardImagesEasy; // Default
 
     // List to track card IDs and their positions
     private List<Integer> cardPositions;
@@ -94,15 +99,15 @@ public class MainActivity extends AppCompatActivity {
             }
             isSoundEnabled = getIntent().getBooleanExtra("soundEnabled", true);
 
-            // Set number of cards based on difficulty
+            // Set number of cards and images based on difficulty
             if ("hard".equals(gameMode)) {
                 NUM_CARDS = NUM_CARDS_HARD;
-                // Set up grid for hard mode (5x4 grid)
+                cardImages = cardImagesHard;
                 gameGrid.setColumnCount(5);
                 gameGrid.setRowCount(4);
             } else {
                 NUM_CARDS = NUM_CARDS_EASY;
-                // Set up grid for easy mode (4x3 grid)
+                cardImages = cardImagesEasy;
                 gameGrid.setColumnCount(4);
                 gameGrid.setRowCount(3);
             }
@@ -184,12 +189,11 @@ public class MainActivity extends AppCompatActivity {
                 card.setLayoutParams(params);
                 card.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                // Set background with fallback
-                try {
+                // Set card background based on mode
+                if (NUM_CARDS == NUM_CARDS_HARD) {
+                    card.setBackgroundResource(R.drawable.card_hard_mode);
+                } else {
                     card.setBackgroundResource(R.drawable.card_background);
-                } catch (Exception e) {
-                    // Fallback background
-                    card.setBackgroundColor(Color.LTGRAY);
                 }
 
                 // Set tag to identify this card's position

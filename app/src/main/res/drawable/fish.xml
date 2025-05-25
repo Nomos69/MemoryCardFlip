@@ -1,0 +1,46 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Fish body with gradient -->
+    <path
+        android:fillType="evenOdd"
+        android:fillColor="#2196F3"
+        android:pathData="M2,12c0,0 4,-4 10,-4s10,4 10,4 -4,4 -10,4 -10,-4 -10,-4z"/>
+    <!-- Fish belly highlight -->
+    <path
+        android:fillColor="#B3E5FC"
+        android:pathData="M4,12c0,0 3,-2 8,-2s8,2 8,2 -3,2 -8,2 -8,-2 -8,-2z"/>
+    <!-- Fish tail with more detail -->
+    <path
+        android:fillColor="#1976D2"
+        android:pathData="M22,12l2,-2v4z"/>
+    <path
+        android:fillColor="#64B5F6"
+        android:pathData="M22,12l1.5,-1.5v3z"/>
+    <!-- Fish dorsal fin -->
+    <path
+        android:fillColor="#42A5F5"
+        android:pathData="M10,8c0,0 1,-2 2,-2s2,2 2,2"/>
+    <!-- Fish pectoral fin -->
+    <path
+        android:fillColor="#4FC3F7"
+        android:pathData="M10,12c0,0 -1,2 -2,2"/>
+    <!-- Fish eye with highlight (using path instead of circle) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M8.5,10.5m-0.8,0a0.8,0.8 0 1,0 1.6,0a0.8,0.8 0 1,0 -1.6,0"/>
+    <path
+        android:fillColor="#212121"
+        android:pathData="M8.5,10.5m-0.3,0a0.3,0.3 0 1,0 0.6,0a0.3,0.3 0 1,0 -0.6,0"/>
+    <path
+        android:fillColor="#B3E5FC"
+        android:pathData="M8.2,10.2m-0.15,0a0.15,0.15 0 1,0 0.3,0a0.15,0.15 0 1,0 -0.3,0"/>
+    <!-- Fish mouth -->
+    <path
+        android:strokeColor="#1565C0"
+        android:strokeWidth="0.2"
+        android:pathData="M7.7,12.2c0.2,0.2 0.6,0.2 0.8,0"/>
+</vector>
+
