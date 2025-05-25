@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import android.media.MediaPlayer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,10 +46,12 @@ public class MainActivity extends AppCompatActivity {
     private boolean isProcessing = false; // Flag to prevent clicking during card processing
     private int pairsFound = 0;
 
-    // List of card image resources
-    private Integer[] cardImages = {
+    // List of card image resources - Fixed: Added more images to prevent cycling issues
+    private final Integer[] cardImages = {
             R.drawable.apple, R.drawable.banana, R.drawable.grapes,
-            R.drawable.hippo, R.drawable.lion, R.drawable.monkey
+            R.drawable.hippo, R.drawable.lion, R.drawable.monkey,
+            // Add fallback images if you don't have enough unique images
+            R.drawable.back_card, R.drawable.back_card, R.drawable.back_card, R.drawable.back_card
     };
 
     // List to track card IDs and their positions
@@ -59,20 +62,36 @@ public class MainActivity extends AppCompatActivity {
     private static final String PREFS_NAME = "MemoryCardFlipPrefs";
     private static final String HIGH_SCORE_KEY = "HighScore";
 
+    // MediaPlayer instances for sound effects
+    private MediaPlayer clickSound;
+    private MediaPlayer matchSound;
+    private MediaPlayer mismatchSound;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         try {
-            // Initialize UI elements
+            setContentView(R.layout.activity_main);
+
+            // Initialize UI elements with null checks
             tvCurrentScore = findViewById(R.id.tvCurrentScore);
             tvHighScore = findViewById(R.id.tvHighScore);
             gameGrid = findViewById(R.id.gameGrid);
             btnResetGame = findViewById(R.id.btnResetGame);
 
-            // Get game mode and sound settings from intent
+            // Check if all UI elements were found
+            if (tvCurrentScore == null || tvHighScore == null || gameGrid == null || btnResetGame == null) {
+                Toast.makeText(this, "Error: UI elements not found", Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+
+            // Get game mode and sound settings from intent with safe defaults
             String gameMode = getIntent().getStringExtra("mode");
+            if (gameMode == null) {
+                gameMode = "easy"; // Default fallback
+            }
             isSoundEnabled = getIntent().getBooleanExtra("soundEnabled", true);
 
             // Set number of cards based on difficulty
@@ -98,10 +117,16 @@ public class MainActivity extends AppCompatActivity {
 
             // Initialize and setup the game
             setupGame();
+
+            // Initialize sound effects
+            clickSound = MediaPlayer.create(this, R.raw.click);
+            matchSound = MediaPlayer.create(this, R.raw.match);
+            mismatchSound = MediaPlayer.create(this, R.raw.notmatch);
+
         } catch (Exception e) {
-            // Log the exception to identify the issue
-            e.printStackTrace();
-            Toast.makeText(this, "An error occurred: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            // Handle any exceptions during initialization
+            logError("Error initializing game: " + e.getMessage(), e);
+            finish();
         }
     }
 
@@ -122,8 +147,11 @@ public class MainActivity extends AppCompatActivity {
 
             // Create shuffled positions for cards (pairs have same image)
             cardPositions = new ArrayList<>();
-            for (int i = 0; i < NUM_CARDS / 2; i++) {
-                // If we need more images than we have, cycle through them again
+            int numPairs = NUM_CARDS / 2;
+
+            // Ensure we have enough images
+            for (int i = 0; i < numPairs; i++) {
+                // Use modulo to safely cycle through available images
                 int imageIndex = i % cardImages.length;
                 cardPositions.add(imageIndex);
                 cardPositions.add(imageIndex);
@@ -136,7 +164,14 @@ public class MainActivity extends AppCompatActivity {
             // Create the cards and add them to the grid
             for (int i = 0; i < NUM_CARDS; i++) {
                 final ImageView card = new ImageView(this);
-                card.setImageResource(R.drawable.back_card);
+
+                // Set default image first
+                try {
+                    card.setImageResource(R.drawable.back_card);
+                } catch (Exception e) {
+                    // Fallback if back_card doesn't exist
+                    card.setImageResource(android.R.drawable.ic_menu_gallery);
+                }
 
                 // Use proper layout parameters for the grid
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -148,7 +183,14 @@ public class MainActivity extends AppCompatActivity {
 
                 card.setLayoutParams(params);
                 card.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                card.setBackgroundResource(R.drawable.card_background);
+
+                // Set background with fallback
+                try {
+                    card.setBackgroundResource(R.drawable.card_background);
+                } catch (Exception e) {
+                    // Fallback background
+                    card.setBackgroundColor(Color.LTGRAY);
+                }
 
                 // Set tag to identify this card's position
                 card.setTag(i);
@@ -167,8 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 gameGrid.addView(card);
             }
         } catch (Exception e) {
-            Toast.makeText(this, "Error setting up game", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
+            logError("Error setting up game: " + e.getMessage(), e);
         }
     }
 
@@ -181,14 +222,22 @@ public class MainActivity extends AppCompatActivity {
         isProcessing = true;
 
         try {
-            // Ensure the imageIndex is valid
-            int safeImageIndex = imageIndex % cardImages.length;
+            // Play click sound
+            playSound(clickSound);
 
-            // Create a new handler for delayed operations
-            Handler handler = new Handler();
+            // Ensure the imageIndex is valid
+            int safeImageIndex = Math.abs(imageIndex) % cardImages.length;
+
+            // Create a new handler for delayed operations - Fixed: Use Looper.getMainLooper()
+            Handler handler = new Handler(Looper.getMainLooper());
 
             // Simply show the image
-            card.setImageResource(cardImages[safeImageIndex]);
+            try {
+                card.setImageResource(cardImages[safeImageIndex]);
+            } catch (Exception e) {
+                // Fallback image
+                card.setImageResource(android.R.drawable.ic_menu_gallery);
+            }
 
             // If this is the first card flipped
             if (firstCard == null) {
@@ -200,39 +249,56 @@ public class MainActivity extends AppCompatActivity {
 
                 // Check if it's a match
                 if (firstCardId == safeImageIndex) {
+                    // Play match sound
+                    playSound(matchSound);
+
                     // Cards match
                     handler.postDelayed(() -> {
-                        // Add a highlight effect for matched cards
-                        card.setBackgroundColor(Color.parseColor("#4CAF50")); // Green background
-                        firstCard.setBackgroundColor(Color.parseColor("#4CAF50"));
+                        try {
+                            // Add a highlight effect for matched cards
+                            card.setBackgroundColor(Color.parseColor("#4CAF50")); // Green background
+                            firstCard.setBackgroundColor(Color.parseColor("#4CAF50"));
 
-                        // Add points
-                        addPoints(POINTS_PER_MATCH);
+                            // Add points
+                            addPoints(POINTS_PER_MATCH);
 
-                        // Make cards unclickable
-                        card.setOnClickListener(null);
-                        firstCard.setOnClickListener(null);
+                            // Make cards unclickable
+                            card.setOnClickListener(null);
+                            firstCard.setOnClickListener(null);
 
-                        // Increment pairs found counter
-                        pairsFound++;
+                            // Increment pairs found counter
+                            pairsFound++;
 
-                        // Reset for next pair
-                        firstCard = null;
-                        firstCardId = -1;
-                        isProcessing = false;
+                            // Reset for next pair
+                            firstCard = null;
+                            firstCardId = -1;
+                            isProcessing = false;
 
-                        // Check if game is over (all pairs found)
-                        checkGameOver();
+                            // Check if game is over (all pairs found)
+                            checkGameOver();
+                        } catch (Exception e) {
+                            logError("Error processing match: " + e.getMessage(), e);
+                            isProcessing = false;
+                        }
                     }, 300);
                 } else {
+                    // Play mismatch sound
+                    playSound(mismatchSound);
+
                     // Cards don't match, add penalty
                     addPoints(PENALTY_FOR_MISMATCH);
 
                     // Delay before hiding cards again
                     handler.postDelayed(() -> {
-                        // Flip both cards back
-                        card.setImageResource(R.drawable.back_card);
-                        firstCard.setImageResource(R.drawable.back_card);
+                        try {
+                            // Flip both cards back
+                            card.setImageResource(R.drawable.back_card);
+                            firstCard.setImageResource(R.drawable.back_card);
+                        } catch (Exception e) {
+                            // Fallback
+                            card.setImageResource(android.R.drawable.ic_menu_gallery);
+                            firstCard.setImageResource(android.R.drawable.ic_menu_gallery);
+                        }
 
                         // Reset for next attempt
                         firstCard = null;
@@ -243,9 +309,13 @@ public class MainActivity extends AppCompatActivity {
             }
         } catch (Exception e) {
             // If any error occurs, reset the game state
-            card.setImageResource(R.drawable.back_card);
+            try {
+                card.setImageResource(R.drawable.back_card);
+            } catch (Exception ex) {
+                card.setImageResource(android.R.drawable.ic_menu_gallery);
+            }
             isProcessing = false;
-            e.printStackTrace();
+            logError("Error flipping card: " + e.getMessage(), e);
         }
     }
 
@@ -254,17 +324,31 @@ public class MainActivity extends AppCompatActivity {
      */
     private void checkGameOver() {
         if (pairsFound >= NUM_CARDS / 2) {
-            // Game is over - show a dialog
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Game Over");
-            builder.setMessage("Final Score: " + currentScore);
-            builder.setPositiveButton("OK", (dialog, which) -> resetGame());
-            builder.show();
-
             // Update high score if necessary
             if (currentScore > highScore) {
                 highScore = currentScore;
-                preferences.edit().putInt(HIGH_SCORE_KEY, highScore).apply();
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putInt(HIGH_SCORE_KEY, highScore);
+                editor.apply();
+                updateScoreDisplay();
+            }
+
+            // Game is over - show a dialog
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Game Over");
+                builder.setMessage("Final Score: " + currentScore);
+                builder.setPositiveButton("OK", (dialog, which) -> resetGame());
+                builder.setCancelable(false);
+
+                AlertDialog dialog = builder.create();
+                if (!isFinishing() && !isDestroyed()) {
+                    dialog.show();
+                }
+            } catch (Exception e) {
+                logError("Error showing game over dialog: " + e.getMessage(), e);
+                // Fallback: just reset the game
+                resetGame();
             }
         }
     }
@@ -273,35 +357,48 @@ public class MainActivity extends AppCompatActivity {
      * Updates the score display on the UI
      */
     private void updateScoreDisplay() {
-        tvCurrentScore.setText(String.valueOf(currentScore));
-        tvHighScore.setText(String.valueOf(highScore));
-    }
-
-    /**
-     * Adds points to the current score
-     * @param points The number of points to add (can be negative for penalties)
-     */
-    private void addPoints(int points) {
-        currentScore += points;
-        // Ensure score doesn't go below zero
-        if (currentScore < 0) {
-            currentScore = 0;
+        try {
+            if (tvCurrentScore != null) {
+                tvCurrentScore.setText(String.valueOf(currentScore));
+            }
+            if (tvHighScore != null) {
+                tvHighScore.setText(String.valueOf(highScore));
+            }
+        } catch (Exception e) {
+            logError("Error updating score display: " + e.getMessage(), e);
         }
-        updateScoreDisplay();
     }
 
-    /**
-     * Resets the current score to zero
-     */
+    private void resetGame() {
+        setupGame();
+    }
+
     private void resetCurrentScore() {
         currentScore = 0;
         updateScoreDisplay();
     }
 
-    /**
-     * Resets the game to its initial state
-     */
-    private void resetGame() {
-        setupGame();
+    private void addPoints(int points) {
+        currentScore += points;
+        updateScoreDisplay();
+    }
+
+    private void playSound(MediaPlayer sound) {
+        if (isSoundEnabled && sound != null) {
+            sound.start();
+        }
+    }
+
+    private void logError(String message, Exception e) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        e.printStackTrace();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (clickSound != null) clickSound.release();
+        if (matchSound != null) clickSound.release();
+        if (mismatchSound != null) clickSound.release();
     }
 }

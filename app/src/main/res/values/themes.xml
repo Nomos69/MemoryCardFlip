@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.MemoryCardFlip" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- Removed duplicate Theme.MemoryCardFlip definition -->
 </resources>
+

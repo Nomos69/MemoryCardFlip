@@ -1,30 +1,55 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <path android:pathData="M31,63.928c0,0 6.4,-11 12.1,-13.1c7.2,-2.6 26,-1.4 26,-1.4l38.1,38.1L107,108.928l-32,-1L31,63.928z">
-        <aapt:attr name="android:fillColor">
-            <gradient
-                android:endX="85.84757"
-                android:endY="92.4963"
-                android:startX="42.9492"
-                android:startY="49.59793"
-                android:type="linear">
-                <item
-                    android:color="#44000000"
-                    android:offset="0.0" />
-                <item
-                    android:color="#00000000"
-                    android:offset="1.0" />
-            </gradient>
-        </aapt:attr>
-    </path>
+
+    <!-- Basket shadow (subtle) -->
     <path
-        android:fillColor="#FFFFFF"
-        android:fillType="nonZero"
-        android:pathData="M65.3,45.828l3.8,-6.6c0.2,-0.4 0.1,-0.9 -0.3,-1.1c-0.4,-0.2 -0.9,-0.1 -1.1,0.3l-3.9,6.7c-6.3,-2.8 -13.4,-2.8 -19.7,0l-3.9,-6.7c-0.2,-0.4 -0.7,-0.5 -1.1,-0.3C38.8,38.328 38.7,38.828 38.9,39.228l3.8,6.6C36.2,49.428 31.7,56.028 31,63.928h46C76.3,56.028 71.8,49.428 65.3,45.828zM43.4,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2c-0.3,-0.7 -0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C45.3,56.528 44.5,57.328 43.4,57.328L43.4,57.328zM64.6,57.328c-0.8,0 -1.5,-0.5 -1.8,-1.2s-0.1,-1.5 0.4,-2.1c0.5,-0.5 1.4,-0.7 2.1,-0.4c0.7,0.3 1.2,1 1.2,1.8C66.5,56.528 65.6,57.328 64.6,57.328L64.6,57.328z"
-        android:strokeWidth="1"
-        android:strokeColor="#00000000" />
+        android:pathData="M20,85 C20,95 30,105 54,105 C78,105 88,95 88,85 C88,80 78,75 54,75 C30,75 20,80 20,85 Z"
+        android:fillColor="#00000020" />
+
+    <!-- Basket body (woven texture) -->
+    <path
+        android:pathData="M20,80 C20,90 30,100 54,100 C78,100 88,90 88,80 C88,70 78,60 54,60 C30,60 20,70 20,80 Z"
+        android:fillColor="#8B4513" />
+    <!-- Woven texture lines -->
+    <path
+        android:pathData="M30,70 L78,70 M30,75 L78,75 M30,80 L78,80 M30,85 L78,85"
+        android:strokeColor="#654321"
+        android:strokeWidth="1" />
+
+    <!-- Apple -->
+    <path
+        android:pathData="M38,58 C43,58 48,53 48,48 C48,43 43,38 38,38 C33,38 28,43 28,48 C28,53 33,58 38,58 Z"
+        android:fillColor="#FF0000" />
+    <path
+        android:pathData="M38,38 C38,36 37,34 36,34 C35,34 34,36 34,38"
+        android:fillColor="#8B4513" />
+
+    <!-- Orange -->
+    <path
+        android:pathData="M62,58 C67,58 72,53 72,48 C72,43 67,38 62,38 C57,38 52,43 52,48 C52,53 57,58 62,58 Z"
+        android:fillColor="#FFA500" />
+    <path
+        android:pathData="M64,53 C65,53 66,52 66,51 C66,50 65,49 64,49 C63,49 62,50 62,51 C62,52 63,53 64,53 Z"
+        android:fillColor="#FF8C00" />
+
+    <!-- Banana -->
+    <path
+        android:pathData="M45,38 C50,28 60,18 70,18 C75,18 80,23 80,28 C80,33 75,38 70,38 C60,38 50,38 45,38 Z"
+        android:fillColor="#FFFF00" />
+    <path
+        android:pathData="M47,33 C48,33 49,32 49,31 C49,30 48,29 47,29 C46,29 45,30 45,31 C45,32 46,33 47,33 Z"
+        android:fillColor="#FFFFFF" />
+
+    <!-- Grapes -->
+    <path
+        android:pathData="
+            M50,68 C55,68 60,63 60,58 C60,53 55,48 50,48 C45,48 40,53 40,58 C40,63 45,68 50,68 Z
+            M55,53 C60,53 65,48 65,43 C65,38 60,33 55,33 C50,33 45,38 45,43 C45,48 50,53 55,53 Z"
+        android:fillColor="#800080" />
+    <path
+        android:pathData="M52,63 C53,63 54,62 54,61 C54,60 53,59 52,59 C51,59 50,60 50,61 C50,62 51,63 52,63 Z"
+        android:fillColor="#9932CC" />
 </vector>

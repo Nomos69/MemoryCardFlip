@@ -13,16 +13,22 @@
         android:theme="@style/Theme.MemoryCardFlip"
         tools:targetApi="31">
 
-        <!-- Menu Activity as launcher -->
+        <!-- Splash Activity as launcher -->
         <activity
-            android:name=".MenuActivity"
+            android:name=".SplashActivity"
             android:exported="true"
-            android:screenOrientation="unspecified">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Menu Activity -->
+        <activity
+            android:name=".MenuActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat" />
 
         <!-- Game Activity -->
         <activity
