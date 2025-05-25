@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Lion mane -->
+    <path
+        android:pathData="M50,80 C75,80 90,65 90,40 C90,15 75,0 50,0 C25,0 10,15 10,40 C10,65 25,80 50,80 Z"
+        android:fillColor="#DAA520" />
+
+    <!-- Lion face -->
+    <path
+        android:pathData="M50,70 C70,70 80,55 80,35 C80,15 70,5 50,5 C30,5 20,15 20,35 C20,55 30,70 50,70 Z"
+        android:fillColor="#F4A460" />
+
+    <!-- Left eye -->
+    <path
+        android:pathData="M40,35 C40,30 38,25 35,25 C32,25 30,30 30,35 C30,40 32,45 35,45 C38,45 40,40 40,35 Z"
+        android:fillColor="#000000" />
+
+    <!-- Right eye -->
+    <path
+        android:pathData="M60,35 C60,30 58,25 55,25 C52,25 50,30 50,35 C50,40 52,45 55,45 C58,45 60,40 60,35 Z"
+        android:fillColor="#000000" />
+
+    <!-- Nose -->
+    <path
+        android:pathData="M50,50 C55,50 60,45 60,40 C60,35 55,30 50,30 C45,30 40,35 40,40 C40,45 45,50 50,50 Z"
+        android:fillColor="#000000" />
+</vector>

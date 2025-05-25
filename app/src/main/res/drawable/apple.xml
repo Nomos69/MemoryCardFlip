@@ -1,0 +1,21 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Apple body -->
+    <path
+        android:pathData="M50,80 C70,80 85,65 85,45 C85,25 70,10 50,10 C30,10 15,25 15,45 C15,65 30,80 50,80 Z"
+        android:fillColor="#FF0000" />
+
+    <!-- Stem -->
+    <path
+        android:pathData="M50,10 C50,5 48,0 46,0 C44,0 42,5 42,10 C42,15 44,20 46,20 C48,20 50,15 50,10 Z"
+        android:fillColor="#8B4513" />
+
+    <!-- Leaf -->
+    <path
+        android:pathData="M50,15 C55,10 60,5 65,5 C70,5 70,10 65,15 C60,20 55,25 50,25 C45,25 45,20 50,15 Z"
+        android:fillColor="#008000" />
+</vector>

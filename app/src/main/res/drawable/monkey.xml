@@ -1,0 +1,41 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Monkey head -->
+    <path
+        android:pathData="M50,70 C70,70 85,55 85,35 C85,15 70,0 50,0 C30,0 15,15 15,35 C15,55 30,70 50,70 Z"
+        android:fillColor="#8B4513" />
+
+    <!-- Face background -->
+    <path
+        android:pathData="M50,60 C65,60 75,50 75,35 C75,20 65,10 50,10 C35,10 25,20 25,35 C25,50 35,60 50,60 Z"
+        android:fillColor="#F5DEB3" />
+
+    <!-- Left ear -->
+    <path
+        android:pathData="M20,50 C10,50 0,40 0,30 C0,20 10,10 20,10 C25,10 30,15 30,25 C30,35 25,50 20,50 Z"
+        android:fillColor="#8B4513" />
+
+    <!-- Right ear -->
+    <path
+        android:pathData="M80,50 C90,50 100,40 100,30 C100,20 90,10 80,10 C75,10 70,15 70,25 C70,35 75,50 80,50 Z"
+        android:fillColor="#8B4513" />
+
+    <!-- Left eye -->
+    <path
+        android:pathData="M40,35 C40,30 38,25 35,25 C32,25 30,30 30,35 C30,40 32,45 35,45 C38,45 40,40 40,35 Z"
+        android:fillColor="#000000" />
+
+    <!-- Right eye -->
+    <path
+        android:pathData="M60,35 C60,30 58,25 55,25 C52,25 50,30 50,35 C50,40 52,45 55,45 C58,45 60,40 60,35 Z"
+        android:fillColor="#000000" />
+
+    <!-- Mouth -->
+    <path
+        android:pathData="M40,50 C40,55 45,60 50,60 C55,60 60,55 60,50 C60,45 55,45 50,45 C45,45 40,45 40,50 Z"
+        android:fillColor="#A0522D" />
+</vector>

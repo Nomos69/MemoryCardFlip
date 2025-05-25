@@ -1,0 +1,36 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Orange body -->
+    <path
+        android:pathData="M50,80 C70,80 85,65 85,45 C85,25 70,10 50,10 C30,10 15,25 15,45 C15,65 30,80 50,80 Z"
+        android:fillColor="#FFA500" />
+
+    <!-- Peel texture (small dimples) -->
+    <path
+        android:pathData="
+            M45,45 C46,45 47,44 47,43 C47,42 46,41 45,41 C44,41 43,42 43,43 C43,44 44,45 45,45 Z
+            M55,45 C56,45 57,44 57,43 C57,42 56,41 55,41 C54,41 53,42 53,43 C53,44 54,45 55,45 Z
+            M50,55 C51,55 52,54 52,53 C52,52 51,51 50,51 C49,51 48,52 48,53 C48,54 49,55 50,55 Z
+            M40,50 C41,50 42,49 42,48 C42,47 41,46 40,46 C39,46 38,47 38,48 C38,49 39,50 40,50 Z
+            M60,50 C61,50 62,49 62,48 C62,47 61,46 60,46 C59,46 58,47 58,48 C58,49 59,50 60,50 Z"
+        android:fillColor="#FF8C00" />
+
+    <!-- Stem -->
+    <path
+        android:pathData="M50,12 C51,12 52,10 52,8 C52,6 51,4 50,4 C49,4 48,6 48,8 C48,10 49,12 50,12 Z"
+        android:fillColor="#8B4513" />
+
+    <!-- Leaf with vein -->
+    <path
+        android:pathData="M50,15 C55,10 60,5 65,5 C70,5 70,10 65,15 C60,20 55,25 50,25 C45,25 45,20 50,15 Z"
+        android:fillColor="#008000" />
+    <path
+        android:pathData="M50,15 C55,10 60,10 62,12"
+        android:strokeColor="#006400"
+        android:strokeWidth="1"
+        android:fillColor="#00000000" />
+</vector>

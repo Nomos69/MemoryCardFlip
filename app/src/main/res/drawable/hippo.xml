@@ -1,0 +1,31 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="100dp"
+    android:height="100dp"
+    android:viewportWidth="100"
+    android:viewportHeight="100">
+
+    <!-- Hippo head -->
+    <path
+        android:pathData="M50,80 C70,80 85,65 85,40 C85,15 70,0 50,0 C30,0 15,15 15,40 C15,65 30,80 50,80 Z"
+        android:fillColor="#808080" />
+
+    <!-- Mouth -->
+    <path
+        android:pathData="M50,60 C65,60 75,50 75,40 C75,30 65,20 50,20 C35,20 25,30 25,40 C25,50 35,60 50,60 Z"
+        android:fillColor="#C0C0C0" />
+
+    <!-- Left ear -->
+    <path
+        android:pathData="M30,20 C25,20 20,15 20,10 C20,5 25,0 30,0 C35,0 40,5 40,10 C40,15 35,20 30,20 Z"
+        android:fillColor="#808080" />
+
+    <!-- Right ear -->
+    <path
+        android:pathData="M70,20 C65,20 60,15 60,10 C60,5 65,0 70,0 C75,0 80,5 80,10 C80,15 75,20 70,20 Z"
+        android:fillColor="#808080" />
+
+    <!-- Nostrils -->
+    <path
+        android:pathData="M45,45 C47,45 49,43 49,41 C49,39 47,37 45,37 C43,37 41,39 41,41 C41,43 43,45 45,45 Z M55,45 C57,45 59,43 59,41 C59,39 57,37 55,37 C53,37 51,39 51,41 C51,43 53,45 55,45 Z"
+        android:fillColor="#000000" />
+</vector>
