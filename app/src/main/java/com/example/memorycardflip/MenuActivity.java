@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Button btnEasy, btnHard, btnSoundToggle;
+    private Button btnEasy, btnHard, btnSound;
     private ImageView gameIcon;
     private boolean isSoundEnabled = true;
 
@@ -40,11 +40,11 @@ public class MenuActivity extends AppCompatActivity {
             // Initialize UI elements - with null checks
             btnEasy = findViewById(R.id.btn_easy);
             btnHard = findViewById(R.id.btn_hard);
-            btnSoundToggle = findViewById(R.id.btn_sound_toggle);
+            btnSound = findViewById(R.id.btn_sound);
             gameIcon = findViewById(R.id.gameIcon);
 
             // Check if all UI elements were found
-            if (btnEasy == null || btnHard == null || btnSoundToggle == null) {
+            if (btnEasy == null || btnHard == null || btnSound == null) {
                 Toast.makeText(this, "Error: UI elements not found in menu", Toast.LENGTH_LONG).show();
                 finish();
                 return;
@@ -63,16 +63,16 @@ public class MenuActivity extends AppCompatActivity {
 
             // Set the initial button text with fallback
             try {
-                btnSoundToggle.setText(isSoundEnabled ? R.string.sound_on : R.string.sound_off);
+                btnSound.setText(isSoundEnabled ? R.string.sound_on : R.string.sound_off);
             } catch (Exception e) {
                 // Fallback text if strings don't exist
-                btnSoundToggle.setText(isSoundEnabled ? "Sound: ON" : "Sound: OFF");
+                btnSound.setText(isSoundEnabled ? "Sound: ON" : "Sound: OFF");
             }
 
             // Set up button click listeners
             btnEasy.setOnClickListener(v -> startGame("easy"));
             btnHard.setOnClickListener(v -> startGame("hard"));
-            btnSoundToggle.setOnClickListener(v -> toggleSound());
+            btnSound.setOnClickListener(v -> toggleSound());
 
         } catch (Exception e) {
             Toast.makeText(this, "Error initializing menu: " + e.getMessage(), Toast.LENGTH_LONG).show();
@@ -91,7 +91,7 @@ public class MenuActivity extends AppCompatActivity {
             editor.apply();
 
             // Update button text
-            btnSoundToggle.setText(isSoundEnabled ? R.string.sound_on : R.string.sound_off);
+            btnSound.setText(isSoundEnabled ? R.string.sound_on : R.string.sound_off);
 
             // Start or stop music based on sound preference
             if (isSoundEnabled) {
